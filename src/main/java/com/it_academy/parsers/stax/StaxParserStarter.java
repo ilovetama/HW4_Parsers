@@ -3,7 +3,6 @@ package com.it_academy.parsers.stax;
 import com.it_academy.entity.Article;
 import com.it_academy.entity.Contact;
 
-import com.it_academy.entity.Hotkey;
 import com.it_academy.entity.Journal;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -17,11 +16,11 @@ public class StaxParserStarter {
     List<Journal> titleList = null;
     List<Contact> contactList = null;
     List<Article> articleList = null;
-    List<Hotkey> hotkeyList = null;
+
     Journal currTitle = null;
     Contact currContact = null;
     Article currArticle = null;
-    Hotkey currHotkey = null;
+
     String tagContent = null;
     XMLInputFactory factory = XMLInputFactory.newInstance();
     XMLStreamReader reader =
@@ -57,14 +56,13 @@ public class StaxParserStarter {
           if ("articles".equals(reader.getLocalName())) {
             articleList = new ArrayList<>();
           }
-          //gethotkey
-          if ("hotkeys".equals(reader.getLocalName())) {
-            hotkeyList = new ArrayList<>();
-          }
-          if ("hotkey".equals(reader.getLocalName())) {
-            currHotkey = new Hotkey();
-            currHotkey.setHotkey(reader.getAttributeValue(0));
-          }
+//          //gethotkey
+//          if ("hotkeys".equals(reader.getLocalName())) {
+//
+//          }
+//          if ("hotkey".equals(reader.getLocalName())) {
+//
+//          }
           break;
 
         case XMLStreamConstants.CHARACTERS:
@@ -89,9 +87,9 @@ public class StaxParserStarter {
             case "author" -> currArticle.setAuthor(tagContent);
             case "url" -> currArticle.setUrl(tagContent);
 
-            //get hotkey
-            case "hotkeys" -> hotkeyList.add(currHotkey);
-            case "hotkey" -> currHotkey.setHotkey(tagContent);
+//            //get hotkey
+//            case "hotkeys" -> hotkeyList.add(currHotkey);
+//            case "hotkey" -> currHotkey.setHotkey(tagContent);
           }
           break;
 
@@ -99,7 +97,7 @@ public class StaxParserStarter {
           titleList = new ArrayList<>();
           contactList = new ArrayList<>();
           articleList = new ArrayList<>();
-          hotkeyList = new ArrayList<>();
+         // hotkeyList = new ArrayList<>();
           break;
       }
 
@@ -115,8 +113,8 @@ public class StaxParserStarter {
     for (Article article : articleList) {
       System.out.println(article);
     }
-    for (Hotkey hotkey : hotkeyList) {
-      System.out.println(hotkey);
-    }
+//    for (Hotkey hotkey : hotkeyList) {
+//      System.out.println(hotkey);
+ //   }
   }
 }

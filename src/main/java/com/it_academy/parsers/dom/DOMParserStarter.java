@@ -2,11 +2,11 @@ package com.it_academy.parsers.dom;
 
 import com.it_academy.entity.Article;
 import com.it_academy.entity.Contact;
-import com.it_academy.entity.Hotkey;
 import com.it_academy.entity.Journal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,7 +18,6 @@ public class DOMParserStarter {
   private static List<Contact> contacts = new ArrayList<>();
   private static List<Journal> journals = new ArrayList<>();
   private static List<Article> articles = new ArrayList<>();
-  private static List<Hotkey> hotkeys = new ArrayList<>();
 
   private static Contact setContactsWithXMLChildNodeValues(Contact contact, Node node) {
     String content = node
@@ -62,10 +61,8 @@ public class DOMParserStarter {
       case "title" -> article.setTitle(content);
       case "author" -> article.setAuthor(content);
       case "url" -> article.setUrl(content);
-      case "hotkey" -> article.setHotkey(article.getHotkey());
-
+      case "hotkeys" -> article.setHotkeys(setHotkeysWithChildNodes(node));
     }
-    System.out.println(article.getHotkey());
     return article;
   }
 
@@ -118,33 +115,17 @@ public class DOMParserStarter {
     });
   }
 
-  private static Hotkey setHotkeyWithXMLChildNodeValues(Hotkey hotkey, Node node) {
-    String content = node
-        .getLastChild()
-        .getTextContent()
-        .trim();
-    switch (node.getNodeName()) {
-
-      case "hotkey" -> hotkey.setHotkey(content);
-    }
-    return hotkey;
-  }
-
-  private static void setHotkeyWithXMLNodeValues(NodeList nodeList) {
-
-    DOMParserUtils.getNodeListStream(nodeList).forEach(node -> {
-      Hotkey hotkey = new Hotkey();
+  public static List<String> setHotkeysWithChildNodes(Node childNode) {
+    List<String> hotkeys = new ArrayList<>();
+    NodeList childNodesHotkeys = childNode.getChildNodes();
+    Stream<Node> stream = IntStream.range(0, childNodesHotkeys.getLength())
+        .mapToObj(childNodesHotkeys::item);
+    stream.forEach(node -> {
       if (node instanceof Element) {
-        setHotkeyWithXMLChildNodeValues(hotkey, node);
-        NodeList childNodes = node.getChildNodes();
-        DOMParserUtils.getNodeListStream(childNodes).forEach(childNode -> {
-          if (childNode instanceof Element) {
-            setHotkeyWithXMLChildNodeValues(hotkey, childNode);
-          }
-        });
-        hotkeys.add(hotkey);
+        hotkeys.add(node.getTextContent());
       }
     });
+    return hotkeys;
   }
 
   public static void main(String[] args) {
@@ -152,16 +133,11 @@ public class DOMParserStarter {
     NodeList nodeTitle = document.getElementsByTagName("journaltitle");
     NodeList nodeContacts = document.getElementsByTagName("contacts");
     NodeList nodeArticles = document.getElementsByTagName("article");
-    NodeList nodeHotkeys = document.getElementsByTagName("hotkey");
     setTitleWithXMLNodeValues(nodeTitle);
     setContactsWithXMLNodeValues(nodeContacts);
     setArticleWithXMLNodeValues(nodeArticles);
-    setHotkeyWithXMLNodeValues(nodeHotkeys);
     System.out.println(journals.toString());
     System.out.println(contacts.toString());
     System.out.println(articles.toString());
-    System.out.println(hotkeys.toString());
-
-
   }
 }

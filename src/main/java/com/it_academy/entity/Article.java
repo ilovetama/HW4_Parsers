@@ -3,18 +3,18 @@ package com.it_academy.entity;
 import java.util.List;
 
 public class Article {
+  private String id;
+  private String title;
+  private String author;
+  private String url;
+  private List<String> hotkeys;
 
-  public String title;
-  public String author;
-  public String url;
-  public List<Hotkey> hotkey;
-  public String id;
-
-  public void setHotkey(List<Hotkey> hotkeys) {
-    this.hotkey = hotkeys;
+  public String getId() {
+    return id;
   }
-  public List<Hotkey> getHotkey() {
-    return hotkey;
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getTitle() {
@@ -41,20 +41,21 @@ public class Article {
     this.url = url;
   }
 
-  public String getId() {
-    return id;
+  public List<String> getHotkeys() {
+    return hotkeys;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setHotkeys(List<String> hotkeys) {
+    this.hotkeys = hotkeys;
   }
 
   @Override
   public String toString() {
-    return "Articles  {" +
-        "title='" + title + '\'' + "\n" +
-        "            author='" + author + '\'' + "\n" +
-        "            url='" + url + '\'' + "\n" +
-        "            hotkey='" + hotkey  + '\'' + '}' + "\n";
+    return "Article   {" +
+        "id='" + id + '\'' + "\n" +
+        "           title='" + title + '\'' + "\n" +
+        "           author='" + author + '\'' + "\n" +
+        "           url='" + url + '\'' + "\n" +
+        "           hotkeys=" + hotkeys + '}' + "\n";
   }
 }
