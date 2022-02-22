@@ -1,9 +1,9 @@
 package com.it_academy.parsers.stax;
 
-import com.it_academy.entity.Article;
-import com.it_academy.entity.Contact;
+import com.it_academy.DOMParser.entity.Article;
+import com.it_academy.DOMParser.entity.Contact;
 
-import com.it_academy.entity.Journal;
+import com.it_academy.DOMParser.entity.Journal;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;

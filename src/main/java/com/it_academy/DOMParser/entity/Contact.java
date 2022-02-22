@@ -1,4 +1,4 @@
-package com.it_academy.entity;
+package com.it_academy.DOMParser.entity;
 
 public class Contact {
 

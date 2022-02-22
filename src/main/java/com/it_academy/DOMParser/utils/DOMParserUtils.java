@@ -1,4 +1,4 @@
-package com.it_academy.parsers.dom;
+package com.it_academy.DOMParser.utils;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
