@@ -6,6 +6,6 @@ public class DOMParserStarter {
 
   public static void main(String[] args) {
 
-    DOMParserApplication.DOMParserXML();
+    new DOMParserApplication().DOMParserXML();
   }
 }

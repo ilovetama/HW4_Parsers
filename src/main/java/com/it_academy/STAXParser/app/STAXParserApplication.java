@@ -3,12 +3,13 @@ package com.it_academy.STAXParser.app;
 import com.it_academy.STAXParser.entity.Article;
 import com.it_academy.STAXParser.entity.Contact;
 import com.it_academy.STAXParser.entity.Journal;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class STAXParserApplication {
 
@@ -20,37 +21,30 @@ public class STAXParserApplication {
   private Contact currContact = null;
   private Article currArticle = null;
   private String tagContent = null;
-  private final Journal journal = new Journal();
-  private final Contact contact = new Contact();
 
   private void ParseStartElement(XMLStreamReader reader) throws XMLStreamException {
-    if ("journaltitle".equals(reader.getLocalName())) {
-      currTitle = new Journal();
-      currTitle.setTitle(reader.getAttributeValue(0));
-    }
-    if ("journal".equals(reader.getLocalName())) {
-      titleList = new ArrayList<>();
-    }
-    if ("address".equals(reader.getLocalName())) {
-      currContact = new Contact();
-      currContact.setAddress(reader.getAttributeValue(0));
-    }
-    if ("contacts".equals(reader.getLocalName())) {
-      contactList = new ArrayList<>();
-    }
-    if ("article".equals(reader.getLocalName())) {
-      currArticle = new Article();
-      currArticle.setId(reader.getAttributeValue(0));
-    }
-    if ("articles".equals(reader.getLocalName())) {
-      articleList = new ArrayList<>();
-    }
-    if ("hotkeys".equals(reader.getLocalName())) {
-      hotkeyList = new ArrayList<>();
-    }
-    if ("hotkey".equals(reader.getLocalName())) {
-      hotkeyList.add(reader.getElementText());
-      currArticle.setHotkeys(hotkeyList);
+
+    switch (reader.getLocalName()){
+      case "journaltitle" -> {
+        currTitle = new Journal();
+        currTitle.setTitle(reader.getAttributeValue(0));
+      }
+      case "journal" -> titleList = new ArrayList<>();
+      case "address" -> {
+        currContact = new Contact();
+        currContact.setAddress(reader.getAttributeValue(0));
+      }
+      case "contacts" -> contactList = new ArrayList<>();
+      case "article" -> {
+        currArticle = new Article();
+        currArticle.setId(reader.getAttributeValue(0));
+      }
+      case "articles" -> articleList = new ArrayList<>();
+      case "hotkey" -> {
+        hotkeyList.add(reader.getElementText());
+        currArticle.setHotkeys(hotkeyList);
+      }
+      case "hotkeys" -> hotkeyList = new ArrayList<>();
     }
   }
 
@@ -86,7 +80,7 @@ public class STAXParserApplication {
     }
   }
 
-  public void ParseAndPrintXML() throws XMLStreamException {
+  public void parseAndPrintXML() throws XMLStreamException {
     STAXParserXML();
     for (Journal journal : titleList) {
       System.out.println(journal);
