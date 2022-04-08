@@ -82,15 +82,9 @@ public class STAXParserApplication {
 
   public void parseAndPrintXML() throws XMLStreamException {
     STAXParserXML();
-    for (Journal journal : titleList) {
-      System.out.println(journal);
-    }
-    for (Contact contact : contactList) {
-      System.out.println(contact);
-    }
-    for (Article article : articleList) {
-      System.out.println(article);
-    }
+    titleList.forEach(System.out::println);
+    contactList.forEach(System.out::println);
+    articleList.forEach(System.out::println);
   }
 }
 
